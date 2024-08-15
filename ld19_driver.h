@@ -24,7 +24,7 @@ public:
     
     /**
      * @brief LD19のデータを取得する
-     * @return uint8_t
+     * @return int8_t
      * @return 0: 正常終了
      * @return -1: シリアルポートにバッファがない
      * @return -2: CRCcheckエラー(実装されてません)
