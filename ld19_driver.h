@@ -29,19 +29,26 @@ public:
      * @return -1: シリアルポートにバッファがない
      * @return -2: CRCcheckエラー(実装されてません)
      */
-    uint8_t GetLd19RawData(uint8_t **data, uint16_t &size);
+    int8_t GetLd19RawData(uint8_t **data, uint16_t &size);
 
     /**
      * @brief Get the Ld 1 9 Data object
-     * @param speed 
-     * @param startAngle 
-     * @param endAngle 
-     * @param timestamp 
-     * @param distance 
-     * @param intensity 
-     * @return uint8_t 
+     * @param degree 角度
+     * @param distance 距離
+     * @param size 角度と距離の配列サイズ
+     * @return int8_t
+     * @return 0: 正常終了
+     * @return -1: フレームが取得できなかった
      */
-    uint8_t GetLidarAngleAndRange(double **degree, double **distance, uint8_t &size);
+    int8_t GetLidarAngleAndRange(double **degree, double **distance, uint8_t &size);
+
+    /**
+     * @brief CRCの計算用関数
+     * @param data 
+     * @return crcの結果
+     */
+     // TODO(RinYoshida):　いつか実装する
+    uint8_t CalcCrc(uint8_t *data);
 
 private:
     HardwareSerial* uart_;
@@ -49,5 +56,9 @@ private:
     constexpr static uint8_t kLd19VerLen = 0x2C;
     constexpr static uint8_t kTotalByte = 47;
     constexpr static uint8_t kPointSize = 12;
+    double distance_data_[kPointSize];
+    double degree_data_[kPointSize];
+    uint8_t frame_data_[kTotalByte];
+
 };
 #endif // LD19_DRIVER=H
